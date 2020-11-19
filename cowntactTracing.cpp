@@ -3,10 +3,10 @@
 using namespace std;
  
 bool cow_ends_infected[101];
-int N, cowx[251], cowy[251]; // handshake data (0 if no handshake at time t)
+int N, cowx[251], cowy[251]; // handshake  (0 if no handshake at time t)
  
-// Simulate handshakes over time to see if data agrees with this choice of patient_zero and K...
-bool consistent_with_data(int patient_zero, int K)
+// Simulate handshakes over time to see if  agrees with this choice of patient_zero and K...
+bool consistent_with_(int patient_zero, int K)
 {
   bool infected[101] = {false};
   int num_handshakes[101] = {0};
@@ -44,8 +44,13 @@ int main(void)
   bool possible_K[252] = {false};
   for (int i=1; i<=N; i++)
     for (int K=0; K<=251; K++)
-      if (consistent_with_data(i, K)) 
-	possible_i[i] = true; possible_K[K] = true;
+    {
+      if (consistent_with_(i, K))
+      {
+          possible_i[i] = true; possible_K[K] = true;
+      }
+    } 
+	      
  
   int lower_K=251, upper_K=0, num_patient_zero=0;
   for (int K=0; K<=251; K++) if (possible_K[K]) upper_K = K;
