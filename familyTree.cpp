@@ -1,7 +1,6 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
-#include <fstream>
 using namespace std;
  
 int N;
@@ -30,12 +29,10 @@ int isAncestor(string cow1, string cow2)
  
 int main()
 {
-	ifstream fin("family.in");
-    ofstream fout("family.out");
     string bessie, elsie;
-	fin >> N >> bessie >> elsie;
+	cin >> N >> bessie >> elsie;
 	for(int i=0;i<N;i++)
-		fin >> mother[i] >> daughter[i];
+		cin >> mother[i] >> daughter[i];
 	
 	string cow = bessie;
 	int b = 0;
@@ -48,21 +45,21 @@ int main()
 	}
 	if(cow == "")
 	{
-		fout << "NOT RELATED\n";
+		cout << "NOT RELATED\n";
 		return 0;
 	}
 	int a = isAncestor(cow, elsie);
-	if(a == 1 && b == 1) fout << "SIBLINGS\n";
-	else if(a > 1 && b > 1) fout << "COUSINS\n";
+	if(a == 1 && b == 1) cout << "SIBLINGS\n";
+	else if(a > 1 && b > 1) cout << "COUSINS\n";
 	else
 	{
 		if(a > b) swap(elsie, bessie), swap(a, b);
-		fout << elsie << " is the ";
-		for(int i=0;i<b-2;i++) fout << "great-";
-		if(b > 1 && a == 0) fout << "grand-";
-		if(a == 0) fout << "mother";
-		else fout << "aunt";
-		fout << " of " << bessie << '\n';
+		cout << elsie << " is the ";
+		for(int i=0;i<b-2;i++) cout << "great-";
+		if(b > 1 && a == 0) cout << "grand-";
+		if(a == 0) cout << "mother";
+		else cout << "aunt";
+		cout << " of " << bessie << '\n';
 	}
 	return 0;
 }
