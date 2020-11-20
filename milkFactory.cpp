@@ -15,8 +15,8 @@ int main()
  
   int answer = -1;
   for (int i=1; i<=N; i++) {
-    if (outgoing[i]==0 && answer != -1 ) { answer = -1; break; } // found two sinks -- bad!
-    if (outgoing[i]==0) answer = i;  // found first sink; remember it
+    if (outgoing[i]==0 && answer != -1 ) { answer = -1; break; } 
+    if (outgoing[i]==0) answer = i;  
   }
   cout << answer << "\n";
   return 0;
