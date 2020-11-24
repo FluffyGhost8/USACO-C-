@@ -1,15 +1,18 @@
 #include <iostream>
 #include <vector>
+#include <fstream>
 using namespace std;
 using ll = long long;
 
 int main() {
+  ifstream fin("triangles.in");
+  ofstream fout("triangles.out");
   ll n;
-  cin >> n;
+  fin >> n;
   vector<ll> X(n, 0);
   vector<ll> Y(n, 0);
   for(ll i=0; i<n; i++) {
-    cin >> X[i] >> Y[i];
+    fin >> X[i] >> Y[i];
   }
   ll best = -1;
   for(ll i=0; i<n; i++) {
@@ -25,5 +28,5 @@ int main() {
       }
     }
   }
-  cout << best << endl;
+  fout << best << endl;
 }

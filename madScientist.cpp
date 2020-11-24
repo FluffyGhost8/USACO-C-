@@ -1,16 +1,17 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 using namespace std;
 using ll = long long;
 
 int main() {
-  freopen("breedflip.in", "r", stdin);
-  freopen("breedflip.out", "w", stdout);
+  ifstream fin("breedflip.in");
+  ofstream fout("breedflip.out");
   ll n;
-  cin >> n;
+  fin >> n;
   string A;
   string B;
-  cin >> A >> B;
+  fin >> A >> B;
   ll ans = 0;
   bool mismatched = false;
   for(ll i=0; i<n; i++) {
@@ -23,5 +24,5 @@ int main() {
       mismatched = false;
     }
   }
-  cout << ans << endl;
+  fout << ans << endl;
 }

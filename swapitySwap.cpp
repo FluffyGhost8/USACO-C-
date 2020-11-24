@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <fstream>
 using namespace std;
 using namespace std;
  
@@ -13,8 +14,11 @@ int nex(int x) {
 	return x;
 }
  
-int main() {
-	cin >> N >> K >> A1 >> A2 >> B1 >> B2;
+int main() 
+{
+	ifstream fin("swap.in");
+  	ofstream fout("swap.out");
+	fin >> N >> K >> A1 >> A2 >> B1 >> B2;
 	for (int i = 1; i <= N; ++i) {
 		int p = 1, cur = nex(i);
 		while (cur != i) {
@@ -25,5 +29,5 @@ int main() {
 		for (int j = 0; j < k; ++j) cur = nex(cur);
 		res[cur] = i; // position of cow i after k steps is cur
 	}
-	for (int i = 1; i <= N; ++i) cout << res[i] << "\n";
+	for (int i = 1; i <= N; ++i) fout << res[i] << "\n";
 }

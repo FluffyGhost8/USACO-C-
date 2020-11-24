@@ -1,14 +1,17 @@
 #include <iostream>
 #include <cmath>
+#include <fstream>
 using namespace std;
  
 int barn_i, barn_j, rock_i, rock_j, lake_i, lake_j;
  
 int main()
 {
+  ifstream fin("buckets.in");
+  ofstream fout("buckets.out");
   for (int i=0; i<10; i++) {
     string s;
-    cin >> s;
+    fin >> s;
     for (int j=0; j<10; j++) {
       if (s[j] == 'B') { barn_i = i; barn_j = j; }
       if (s[j] == 'R') { rock_i = i; rock_j = j; }
@@ -22,9 +25,9 @@ int main()
 
   // Check for special case where rock is between barn and lake  
   if ((barn_i==lake_i || barn_j==lake_j) && dist_bl == dist_br + dist_rl)
-    cout << dist_bl + 1 << "\n";
+    fout << dist_bl + 1 << "\n";
   else
-    cout << dist_bl - 1 << "\n";
+    fout << dist_bl - 1 << "\n";
  
   return 0;
 }
