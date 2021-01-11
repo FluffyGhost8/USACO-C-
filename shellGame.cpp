@@ -1,4 +1,40 @@
 #include <iostream>
+#include <vector>
+#include <fstream>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+  vector<int> shells;
+  vector<int> numCorrect;
+  int n;
+  int swaps, swape, pebble, correct, guess, index;
+  //ifstream fin("shell.in");
+  //ofstream fout("shell.out");
+  cin >> n;
+  for(int i=1; i<=n; i++) shells.push_back(i);
+  for(int a=0; a<n; a++)
+  {
+    for(int i=0; i<n; i++)
+    {
+      pebble=a+1;
+      cin >> swaps >> swape >> guess;
+      swap(shells[i], shells[i+1]);
+      for(int j=0; j<n; j++)
+      {
+        if(pebble==shells[j]) index=j+1;
+      }
+      if(guess==index) correct++;
+    }
+    numCorrect.push_back(correct);
+  }
+  sort(numCorrect.begin(), numCorrect.end());
+  cout << numCorrect[n-1];
+}
+
+
+/*#include <iostream>
 #include <fstream>
 using namespace std;
  
@@ -30,3 +66,4 @@ int main(void)
   fout << best << "\n";
   return 0;
 }
+*/

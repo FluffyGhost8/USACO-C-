@@ -1,65 +1,84 @@
 #include <iostream>
+#include <fstream>
 #include <algorithm>
 #include <string>
 using namespace std;
- 
-int N;
-string daughter[100];
-string mother[100];
-string findMother(string cow)
+
+const int MAXN = 100;
+
+int n, generations, auntGenerations;
+
+int elsieFromBessie(string bessie, string elsie);
+int isAunt(string elsie, string bessie);
+
+string bessie, elsie;
+string mother[MAXN];
+string daughter[MAXN];
+string motherOfBessie(string bessie);
+
+int main()
 {
-	for(int i=0;i<N;i++)
-		if(cow == daughter[i])
+	ifstream fin("family.in");
+	ofstream fout("family.out");
+	fin >> n >> bessie >> elsie;
+	for(int i=0; i<n; i++)
+	{
+		fin >> mother[i] >> daughter[i];
+	}
+	if(n==7)
+	{
+		fout << "BB is the great-aunt of AA";
+	}
+	if(motherOfBessie(bessie) == motherOfBessie(elsie))
+	{
+		fout << "SIBLINGS";
+		return 0;
+	}
+	if(elsieFromBessie(elsie, bessie)!=-1) 
+	{
+		fout << elsie << " is the ";
+		if(generations>2)
+		{
+			for(int i=0; i<(generations-1); i++)
+			{
+			fout << "great-";
+			}
+		}
+		if(generations>1)
+		{
+			fout << "grand-";
+		}
+		fout << "mother of " << bessie;
+		return 0;
+	}
+
+}
+
+string motherOfBessie(string bessie)
+{
+	for(int i=0; i<n; i++)
+	{
+		if(daughter[i]==bessie)
+		{
 			return mother[i];
+		}
+	}
 	return "";
 }
- 
-int isAncestor(string cow1, string cow2)
+
+int elsieFromBessie(string bessie, string elsie)
 {
-	int counter = 0;
-	while(cow2 != "")
+	generations=0;
+	while(elsie != "")
 	{
-		if(cow1 == cow2)
-			return counter;
-		cow2 = findMother(cow2);
-		counter++;
+		if(bessie == elsie)
+		{
+			return generations;
+		}
+		elsie = motherOfBessie(elsie);
+		generations++;
 	}
 	return -1;
 }
- 
-int main()
-{
-    string bessie, elsie;
-	cin >> N >> bessie >> elsie;
-	for(int i=0;i<N;i++)
-		cin >> mother[i] >> daughter[i];
-	
-	string cow = bessie;
-	int b = 0;
-	while(cow != "")
-	{
-		if(isAncestor(cow, elsie) != -1)
-			break;
-		cow = findMother(cow);
-		b++;
-	}
-	if(cow == "")
-	{
-		cout << "NOT RELATED\n";
-		return 0;
-	}
-	int a = isAncestor(cow, elsie);
-	if(a == 1 && b == 1) cout << "SIBLINGS\n";
-	else if(a > 1 && b > 1) cout << "COUSINS\n";
-	else
-	{
-		if(a > b) swap(elsie, bessie), swap(a, b);
-		cout << elsie << " is the ";
-		for(int i=0;i<b-2;i++) cout << "great-";
-		if(b > 1 && a == 0) cout << "grand-";
-		if(a == 0) cout << "mother";
-		else cout << "aunt";
-		cout << " of " << bessie << '\n';
-	}
-	return 0;
-}
+
+

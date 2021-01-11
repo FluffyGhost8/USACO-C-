@@ -1,37 +1,165 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
- 
-int N, K;
-int storage[10][20];
- 
-bool better(int a, int b, int session)
+
+int k, n, theRankingOfCowA, theRankingOfCowB, control, numConsistentPairs = 0;
+int results[10][20];
+
+void isBetter(int cowa, int cowb);
+
+int main()
 {
-  int apos, bpos;
-  for (int i=0; i<N; i++) {
-    if (storage[session][i] == a) apos = i;
-    if (storage[session][i] == b) bpos = i;
+  ifstream fin("gymnastics.in");
+  ofstream fout("gymnastics.out");
+  fin >> k >> n;
+  for(int i=0; i<k; i++)
+  {
+    for(int j=0; j<n; j++)
+    {
+      fin >> results[i][j];
+    }
   }
-  return apos < bpos;
+  /*for(int i=0; i<k; i++)
+  {
+    for(int j=0; j<n; j++)
+    {
+      cout << results[i][j];
+    }
+  }*/
+  for(int i=1; i<n; i++)
+  {
+    for(int j=(i+1); j<=n; j++)
+    {
+      //cout << i << j << endl;
+      isBetter(i, j);
+    } 
+  }
+  fout << numConsistentPairs;
 }
- 
-int Nbetter(int a, int b)
+
+void isBetter(int cowa, int cowb)
 {
-  int total = 0;
-  for (int session=0; session<K; session++)
-    if (better(a,b,session)) total++;
-  return total;
+  for(int a=0; a<k; a++)
+  {
+    for(int b=0; b<n; b++)
+    {
+      if(results[a][b] == cowa) theRankingOfCowA = b;
+    }
+    for(int b=0; b<n; b++)
+    {
+      if(results[a][b] == cowb) theRankingOfCowB = b;
+    }
+    if(a==0)
+    {
+      if(theRankingOfCowA<theRankingOfCowB)
+      {
+        control = cowa;
+      }
+      if(theRankingOfCowB<theRankingOfCowA)
+      {
+        control = cowb;
+      }
+    }
+    if(a!=0)
+    {
+      if(control == cowa && theRankingOfCowB<theRankingOfCowA)
+      {
+        return;
+      }
+      if(control == cowb && theRankingOfCowA<theRankingOfCowB)
+      {
+        return;
+      }
+    }
+  }
+  numConsistentPairs++;
+  return;
 }
- 
-int main(void)
+/*
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int n, k, apos, bpos, control, consistent=0;
+int results[10][20];
+
+void isBetter(int cowa, int cowb);
+
+int main()
 {
-  cin >> K >> N;
-  for (int k=0; k<K; k++)
-    for (int n=0; n<N; n++) 
-      cin >> storage[k][n];
-  int answer = 0;
-  for (int a=1; a<=N; a++)
-    for (int b=1; b<=N; b++)
-      if (Nbetter(a,b) == K) answer++;
-  cout << answer << "\n";
-  return 0;
+  ifstream fin("gymnastics.in");
+  ofstream fout("gymnastics.out");
+  fin >> k >> n;
+  for(int a=0; a<k; a++)
+  {
+    for(int b=0; b<n; b++)
+    {
+      fin >> results[a][b];
+    }
+  }
+  HALLOfor(int a=0; a<k; a++)
+  {
+    for(int b=0; b<n; b++)
+    {
+      fout << results[a][b];
+    }
+  }HALLO
+  for(int c=1; c<n; c++)
+  {
+    for(int d=(c+1); d<=n; d++)
+    {
+      //fout << "c: " << c << " d: " << d << endl;
+      isBetter(c, d);
+    }
+  }
+  fout << consistent;
 }
+
+void isBetter(int cowa, int cowb)
+{
+  for(int j=0; j<k; j++)
+  {
+    for(int i=0; i<n; i++)
+    {
+      if(results[j][i] == cowa)
+      {
+        apos = i;
+        //fout << "Position of cow " << cowa << " is " << apos << endl;
+      }
+    }
+    for(int i=0; i<n; i++)
+    {
+      if(results[j][i] == cowb)
+      {
+        int bpos = i;
+        //fout << "Position of cow " << cowb << " is " << bpos << endl;
+      }
+    }
+    if(j==0)
+    {
+      if(apos < bpos)
+      {
+        control = cowa;
+      }
+      if(bpos < apos)
+      {
+        control = cowb;
+      }
+    }
+    if(j!=0)
+    {
+      if(control == cowa && bpos<apos)
+      {
+        return;
+      }
+      if(control == cowb && apos<bpos)
+      {
+        return;
+      }
+    }
+  }
+  //cout << (consistent + 1);
+  consistent++;
+  return;  
+}*/
+

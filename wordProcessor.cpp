@@ -1,28 +1,44 @@
+#include <iostream>
 #include <string>
 #include <vector>
-using ll = long long;
+#include <fstream>
 using namespace std;
 
 int main()
 {
+    ifstream fin("word.in");
+    ofstream fout("word.out");
+
     int n, k;
-    cin >> n >> k;
-    string arr[n];
-    int charLen[n];
+    int counter = 0;
+    bool noSpace = true;
+    string x;
+    vector<string> words;
+    vector<char> wordLength;
+    fin >> n >> k;
     for(int i=0; i<n; i++)
     {
-        cin >> arr[i];
-        charLen[i] = arr[i].size();
+        fin >> x;
+        words.push_back(x);
+        wordLength.push_back(words[i].length());
     }
-    int currentLen=0;
     for(int i=0; i<n; i++)
     {
-        if(currentLen+charLen[i] >k)
+        if(counter+wordLength[i] > k)
         {
-            cout << "\n";
-            currentLen=0;
+            fout << "\n";
+            counter = 0;
+            fout << words[i];
+            counter+=wordLength[i];
+        } else {
+            if(i!=0)
+            {
+                fout << " " << words[i];
+                counter+=wordLength[i];
+            } else {
+                fout << words[i];
+                counter+=wordLength[i];
+            }
         }
-        currentLen += charLen[i];
-        cout << arr[i] << " ";
     }
 }

@@ -1,4 +1,5 @@
-#include <stdio.h>
+
+/*#include <stdio.h>
  
 int solve(int dist) {
   int minspeed;
@@ -27,3 +28,4 @@ int main() {
     printf("%d\n", solve(k));
   }
 }
+*/
