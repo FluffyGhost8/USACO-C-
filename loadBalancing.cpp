@@ -1,7 +1,7 @@
 #include <iostream>
-#include <fstream>
+//#include <fstream>
 #include <vector>
-#include <algorithm>
+//#include <algorithm>
 using namespace std;
 
 int n, b, dx, dy;
@@ -14,12 +14,12 @@ vector<int> cowY;
 
 int main()
 {
-  ifstream fin("balancing.in");
-  ofstream fout("balancing.out");
-  fin >> n >> b;
+  //ifstream fin("balancing.in");
+  //ofstream fout("balancing.out");
+  cin >> n >> b;
   for(int i=0; i<n; i++) 
   {
-    fin >> dx >> dy;
+    cin >> dx >> dy;
     cowX.push_back(dx);
     cowY.push_back(dy);
   }
@@ -58,5 +58,6 @@ int main()
       q4 = 0;
     }
   }
-  fout << minMax;
+  cout << minMax;
 }
+

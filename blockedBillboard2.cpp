@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <fstream>
+//#include <fstream>
 using namespace std;
 
  int cx1, cx2, cy1, cy2, lx1, lx2, ly1, ly2;
@@ -49,10 +49,11 @@ void solve()
 }
 int main()
 {
-    ifstream fin("billboard.in");
-    ofstream fout("billboard.out");
-    fin >> lx1 >> ly1 >> lx2 >> ly2 >> cx1 >> cy1 >> cx2 >> cy2;
+    //ifstream fin("billboard.in");
+    //ofstream fout("billboard.out");
+    cin >> lx1 >> ly1 >> lx2 >> ly2 >> cx1 >> cy1 >> cx2 >> cy2;
     solve();
-    fout << answer;
+    cout << answer;
     return 0; 
 }
+

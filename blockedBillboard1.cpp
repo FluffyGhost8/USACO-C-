@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <fstream>
+//#include <fstream>
 using namespace std;
 
 int ax1, ax2, ay1, ay2, gx1, gx2, gy1, gy2, tx1, tx2, ty1, ty2;
@@ -12,9 +12,9 @@ bool inTr(int x, int y);
 
 int main()
 {  
-    ifstream fin("billboard.in");
-    ofstream fout("billboard.out");
-    fin >> ax1 >> ay1 >> ax2 >> ay2 >> gx1 >> gy1 >> gx2 >> gy2 >> tx1 >> ty1 >> tx2 >> ty2;
+    //ifstream fin("billboard.in");
+    //ofstream fout("billboard.out");
+    cin >> ax1 >> ay1 >> ax2 >> ay2 >> gx1 >> gy1 >> gx2 >> gy2 >> tx1 >> ty1 >> tx2 >> ty2;
     for(int x=(-1000); x<=1000; x++) // x coord
     {
         for(int y=(-1000); y<=1000; y++)
@@ -28,7 +28,7 @@ int main()
             }
         }
     }
-    fout << counter;
+    cout << counter;
 }
 
 bool inA(int x, int y)

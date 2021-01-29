@@ -1,166 +1,179 @@
-
 #include <iostream>
 #include <vector>
 using namespace std;
 
+void move(int i);
+void inRut(int i);
+void contInf(int i);
+
+struct cowInfo
+{
+  int x, y, grassEaten;
+  char dir;
+  bool isStopped;
+  bool isInfinite;
+};
+
+struct rut
+{
+  int x, y;
+};
+
+vector<cowInfo> cows;
+vector<rut> ruts;
+
+int counter=0;
+int tracker = 10;
+int n;
+int input;
+char a;
+bool flag = true;
+
 int main()
 {
-    int n;
-    cin >> n;
-    char inputChar;
-    int inputInt;
-    int flag;
-    bool done=false;
-    vector<char> direction;
-    vector<int> xCoord;
-    vector<int> yCoord;
-    vector<int> xRut;
-    vector<int> yRut;
-    vector<int> sols;
-    vector<bool> cowResolved;
-    //cout << "I am at line 20" << endl;
+  
+  cin >> n;
+  //getting input
+  for(int i=0; i<n; i++)
+  {
+    cin >> a;
+    cows.push_back(cowInfo());
+    cows[i].dir = a;
+    cin >> input;
+    cows[i].x = input;
+    cin >> input;
+    cows[i].y = input;
+    cows[i].isStopped = false;
+    cows[i].isInfinite = false;
+    cows[i].grassEaten = 0;
+  }
+  while(flag)
+  {
     for(int i=0; i<n; i++)
     {
-        cin >> inputChar;
-        //cout << "I am at line 24" << endl;
-        direction.push_back(inputChar);
-        //cout << "I am at line 26" << endl;
-        cin >> inputInt;
-        //cout << "I am at line 28" << endl;
-        xCoord.push_back(inputInt);
-        //cout << "I am at line 30" << endl;
-        //xRut.push_back(inputInt);
-        inputInt=0;
-        //cout << "I am at line 33" << endl;
-        cin >> inputInt;
-        //cout << "I am at line 35" << endl;
-        yCoord.push_back(inputInt);
-        //cout << "I am at line 37" << endl;
-        //yRut.push_back(inputInt);
-        sols.push_back(0);
-        //cout << "I am at line 40" << endl;
-        cowResolved.push_back(false);
-        //cout << "I am at line 42" << endl;
-        //cout << i << endl;
+      if(!cows[i].isStopped)
+      {
+        move(i);
+        inRut(i);
+      }
+      if(!cows[i].isStopped)
+      {
+        contInf(i);
+      }
     }
-    //for (int i = 0; i < n; i++)  cout << cowResolved[i];
-    //cout << cowResolved[0] << endl;
-    cout << "I am out of the stupid input loop" << endl;
-    /*for (int i = 0; i < n; i++)
+
+    flag = false;
+    for(int i=0; i<n; i++)
     {
-        cout << cowResolved[i];
-    }*/
-   while(done==false)
-    {
-        //cout << "I am inside the outer while loop" << endl;
-        for (int i = 0; i < n; i++) // Iterate through each cow
-        {
-            //cout << "I am inside the cow iterator" << endl;
-            //for (int i = 0; i < n; i++)  cout << cowResolved[i];
-            if(cowResolved[i]==false) // Movement
-            {
-                //cout << "In mv loop" << endl;
-                if(direction[i]=='N')
-                {
-                    xRut.push_back(xCoord[i]);
-                    yRut.push_back(yCoord[i]);
-                    yCoord[i]++;
-                    sols[i]++;
-                    //cout << "In movement N loop" << endl;
-                }
-                if(direction[i]=='E')
-                {
-                    xRut.push_back(xCoord[i]);
-                    yRut.push_back(yCoord[i]);
-                    xCoord[i]++;
-                    sols[i]++;
-                    //cout << "In movement E loop" << endl;
-                }
-            }
-            //for (int i = 0; i < n; i++)  cout << cowResolved[i];
-            if(cowResolved[i]==false) // Has the cow moved into a rut?
-            {
-                //cout << "In outer rut loop" << endl;
-                for(int j=0; j<xRut.size(); j++)
-                {
-                    if(xCoord[i]==xRut[j] && yCoord[i]==yRut[j])
-                    {
-                        //cout << "Incrementing flag" << endl;
-                        flag=1;
-                    }
-                }
-                if(flag==1)
-                {
-                    cowResolved[i]=true;
-                }
-            }
-            if(cowResolved[i]==false) // Will the cow continue forever?
-            {
-                //cout << "Will cow continue forever";
-                if(direction[i]=='N') // If cow i is going north
-                {
-                    //cout << "In cow i N loop" << endl;
-                    for(int j=0; j<n; j++)
-                    {
-                        //cout << "finder" << endl;
-                        if(direction[j]=='E' && xCoord[j]<xCoord[i] && yCoord[j]>yCoord[i])
-                        {
-                            //cout << "incrementing" << endl;
-                            flag = 2;
-                        }
-                    }
-                    if(flag!=2)
-                    {
-                        sols[i]=-1;
-                        cowResolved[i]=true;
-                        cout << "yoyoma" << endl;
-                    }
-                }
-            
-                if(direction[i]=='E') // If cow i is going east
-                {
-                    for(int j=0; j<n; j++)
-                    {
-                        if(direction[j]=='N' && xCoord[j]>xCoord[i] && yCoord[j]<yCoord[i])
-                        {
-                            cout << "HIHIHIH" << endl;
-                            flag = 2;
-                        }
-                    }
-                    if(flag!=2)
-                    {
-                        sols[i]=-1;
-                        cout << "yoyoma" << sols[i] << endl;
-                        for (int i = 0; i < n; i++)  cout << sols[i];
-                        cowResolved[i]=true;
-                        //cout << "yoyoma" << endl;
-                    }
-                }
-            }
-        }
-        //for(int j=0; j<n; j++) cout << cowResolved[j];
-        for(int j=0; j<n; j++) // Are all cows resolved?
-        {
-            //cout << "are" << endl;
-            //cout << cowResolved[0] << cowResolved[1] << cowResolved[2] << cowResolved[3] << cowResolved[4] << cowResolved[5] << endl;
-            if(cowResolved[j]==1)
-            {
-                //cout << "incr" << endl;
-                flag=3;
-            }
-        }
-        if(flag!=3)
-        {
-            done=true;
-        }
+      if(!cows[i].isInfinite || !cows[i].isStopped)
+      {
+        flag = true;
+        break;
+      }
     }
-    for (int i = 0; i < n; i++)
-    {
-        if(sols[i]==-1)
-        {
-            cout << "Infinity" << endl;
-        } else {
-            cout << sols[i] << endl;
-        }
-    } 
 }
+
+    for(int i=0; i<n; i++)
+    {
+    if(cows[i].isInfinite)
+    {
+        cout << "Infinity" << endl;
+    } else {
+        cout << cows[i].grassEaten << endl;
+    }
+    }
+}
+
+void move(int i)
+{
+  if(cows[i].dir == 'E')
+  {
+    ruts.push_back(rut());
+    ruts[counter].x = cows[i].x;
+    ruts[counter].y = cows[i].y;
+    counter++;
+    cows[i].x++;
+    cows[i].grassEaten++;
+  }
+  if(cows[i].dir == 'N')
+  {
+    ruts.push_back(rut());
+    ruts[counter].x = cows[i].x;
+    ruts[counter].y = cows[i].y;
+    counter++;
+    cows[i].y++;
+    cows[i].grassEaten++;
+  }
+}
+
+void inRut(int i)
+{
+  for(int j=0; j<ruts.size(); j++)
+  {
+    if(ruts[j].x == cows[i].x && ruts[j].y == cows[i].y)
+    {
+      cows[i].isStopped = true;
+      break;
+    }
+  }
+}
+
+
+void contInf(int i)
+{
+  if(cows[i].dir == 'E')
+  {
+    for(int j=0; j<ruts.size(); j++)
+    {
+      if(ruts[j].x > cows[i].x && ruts[j].y == cows[i].y)
+      {
+        cows[i].isInfinite = false;
+        tracker++;
+        break;
+      }
+    }
+    for(int j=0; j<cows.size(); j++)
+    {
+      if(cows[j].dir == 'N' && cows[j].y < cows[i].y && cows[j].x > cows[i].x && ((cows[i].y - cows[j].y) < (cows[j].x - cows[i].x)))
+      {
+        cows[i].isInfinite = false;
+        tracker++;
+        break;
+      }
+    }
+    if(tracker == 10)
+    {
+      cows[i].isInfinite = true;
+    } else {
+      tracker = 10;
+    }
+  }
+  if(cows[i].dir == 'N')
+  {
+    for(int j=0; j<ruts.size(); j++)
+    {
+      if(ruts[j].x == cows[i].x && ruts[j].y > cows[i].y)
+      {
+        cows[i].isInfinite = false;
+        tracker++;
+        break;
+      }
+    }
+    for(int j=0; j<cows.size(); j++)
+    {
+      if(cows[j].dir == 'E' && cows[j].y > cows[i].y && cows[j].x < cows[i].x && ((cows[j].y - cows[i].y) > (cows[i].x - cows[j].x)))
+      {
+        cows[i].isInfinite = false;
+        tracker++;
+        break;
+      }
+    }
+    if(tracker == 10)
+    {
+      cows[i].isInfinite = true;
+    } else {
+      tracker = 10;
+    }
+  }
+}
+
