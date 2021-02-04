@@ -1,97 +1,122 @@
 #include <iostream>
 #include <vector>
 using namespace std;
+
 int main()
 {
     int n;
     int input;
-    int tracker=0;
-    bool found = false;
-    int groups;
-    int counter=0;
-    int keep;
-    int bouncer=0;
-    bool changeNeeded=false;
-    bool goneThrough=false;
-    cin >> n;
+    int numEvens=0, numOdds=0;
+    int ans=0;
+    int findOdds=0;
+    int evenOrOdd = 0;
+    bool flag=false;
     vector<int> id;
+    cin >> n;
     for(int i=0; i<n; i++)
     {
         cin >> input;
         input%=2;
-        id.push_back(input);
-    }
-    for(int i=0; i<n; i++)
+        if(input == 0) numEvens++;
+        if(input == 1) numOdds++;
+        id.push_back(input); 
+    } 
+    if(numEvens == numOdds)
     {
-        for(int j=0; j<id.size(); j++)
+        ans=n;
+    } else if(numOdds > numEvens) { 
+        for(int j=0; j<n; j++) { 
+        if(evenOrOdd == 0)
         {
-            if(id[j]==1) keep++;
-            keep%=2;
-            goneThrough = true;
-            if(j==id.size()-1) 
+            if(numEvens > 0)
             {
-                if(keep==1 && bouncer==0)
+                for(int i=0; i<n; i++) 
                 {
-                    changeNeeded = true;
-                }
-                bouncer++;
-            }
-        }
-        
-        keep =0;
-        if(tracker == 0)
-        {
-            for(int j=0; j<id.size(); j++)
-            {
-                if(id[j] == 0 && id[j] >= 0)
-                {
-                    found = true;
-                    groups++;
-                    id[j] = -1;
-                    break;
-                }
-            }
-            if(!found)
-            {
-                for(int j=0; j<id.size(); j++)
-                {
-                    if(id[j] == 1 && id[j] >= 0)
+                    if(id[i] == 0)
                     {
-                        counter++;
-                        id[j] = -1;
-                        if(counter == 2)
-                        {
-                            found = true;
-                            groups++;
-                            break;
-                        }
+                        id[i] = -1;
+                        numEvens--;
+                        ans++;
+                        break;
+                    }
+                }
+            } else {
+                for(int i=0; i<n; i++)
+                {
+                    if(id[i]==1)
+                    {
+                        id[i] = -1;
+                        findOdds++;
+                    }
+                    if(findOdds==2)
+                    {
+                        ans++;
+                        numOdds-=2;
+                        break;
                     }
                 }
             }
-            found = false;
-            counter = 0;
-            tracker++;
-            tracker%=2;
+            findOdds=0;
+            evenOrOdd++;
+            evenOrOdd%=2;  
         } else {
-            for(int j=0; j<id.size(); j++)
+            if(numEvens == 0)
             {
-                if(id[j] == 1 && id[j] > 0)
+                if(numOdds % 3 == 2 && !flag)
                 {
-                    found = true;
-                    groups++;
-                    id[j] = -1;
-                    break;
+                    for(int i=0; i<n; i++)
+                    {
+                        if(id[i]==1)
+                        {
+                            id[i] = -1;
+                            findOdds++;
+                        }
+                        if(findOdds==3)
+                        {
+                            ans++;
+                            numOdds-=3;
+                            break;
+                        }
+                    }
+                    flag = true;
+                } else {
+                    for(int i=0; i<n; i++)
+                    {
+                        if(id[i]==1)
+                        {
+                            id[i] = -1;
+                            ans++;
+                            numOdds--;
+                            break;
+                        }
+                    }
+                    flag = true;
+                }
+            } else {
+                for(int i=0; i<n; i++)
+                {
+                    if(id[i]==1)
+                    {
+                        id[i] = -1;
+                        ans++;
+                        numOdds--;
+                        break;
+                    }
                 }
             }
-            found = false;
-            tracker++;
-            tracker%=2;
+            findOdds=0;
+            evenOrOdd++;
+            evenOrOdd%=2;
         }
+        //for(int i=0; i<n; i++) cout << id[i] << " ";
+        //cout << numEvens << numOdds << endl;
     }
-    if(changeNeeded)
-    {
-        cout << groups-1;
-    } else {
-        cout << groups;
-    }
+}else if(numEvens > numOdds)
+{
+    ans= (2*numOdds)+1;
 }
+
+
+cout << ans;
+}
+
